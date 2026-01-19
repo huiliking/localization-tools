@@ -1,0 +1,12 @@
+Voici un paragraphe en français d’environ **200 mots** :
+Connectez-vous via le RVP de l'entreprise.
+La ville se réveillait lentement sous une lumière pâle, comme si le jour hésitait encore à s’imposer. Dans les rues étroites, les cafés levaient leurs rideaux métalliques un à un, libérant l’odeur du café fraîchement moulu et des croissants tièdes. Les passants marchaient d’un pas mesuré, chacun enfermé dans ses pensées, tandis que le bruit régulier des tramways donnait au matin un rythme familier. Sur les balcons, quelques plantes verdoyantes résistaient courageusement à la grisaille urbaine, rappelant que la nature trouve toujours un moyen de s’exprimer. Au coin d’une place, un vieil homme lisait son journal, indifférent à l’agitation autour de lui, comme s’il était le gardien silencieux des habitudes du quartier. Plus loin, des enfants riaient en se rendant à l’école, leurs voix claires contrastant avec la gravité des adultes pressés. Ce mélange de lenteur et de mouvement, de solitude et de rencontres furtives, donnait à la ville une atmosphère à la fois banale et profondément humaine. Chaque matin semblait identique au précédent, et pourtant, dans ces détails presque invisibles, se cachait la promesse discrète d’une journée unique.
+This is a log file with paths:
+Installing to C:\Program Files\Common Files\McAfee
+Error: Cannot access C:\Program Files\<nom-serveur>\McAfee
+User directory: C:\Users\John\Documents
+Spanish installation: C:\Archivos de programa\Común
+Normal path: C:\Windows\System32
+Bienvenue à l'Ecole nationale.
+L'Etat français a décidé...
+L'Energie est importante.

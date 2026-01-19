@@ -1,0 +1,1156 @@
+========================================== 
+SIGN-UP LOCALIZATION AUDIT TEST SUITE 
+========================================== 
+Test Date: Sun 01/18/2026 22:35:29.78 
+Target Locale: Spanish (es) 
+========================================== 
+ 
+========================================== 
+TEST 1: www.shopify.com 
+========================================== 
+
+====================================================================
+            SIGN-UP LOCALIZATION AUDIT v2
+           "Do You Really Welcome New Users?"
+====================================================================
+    
+Enter base URL (e.g., https://www.stripe.com): Enter target locale [es]: 
+======================================================================
+SIGN-UP LOCALIZATION AUDIT
+Site: www.shopify.com
+Target Locale: es (Spanish)
+======================================================================
+
+Launching browser with Spanish locale...
+
+######################################################################
+STEP 1: HOMEPAGE TEST
+######################################################################
+
+======================================================================
+Testing: HOMEPAGE
+URL: https://www.shopify.com/
+======================================================================
+
+  -> Checking for popups/overlays...
+    [i] No popups detected
+Test 1 (PRIORITY): Language/Locale Selector Check
+Checking if user can manually select their language...
+  -> Using LLM to find language selector...
+  [i] No language selector found
+  -> Checking URL-based localization instead...
+
+Test 2: URL Culture Code Check
+  [i] No culture code in URL
+
+Test 3: Target Language Check (Spanish)
+  [X] FAIL: Page is NOT in Spanish
+    Evidence: No Spanish content detected
+
+######################################################################
+STEP 2: FIND SIGNUP BUTTON
+######################################################################
+
+Preparing page for button detection...
+  -> Checking for popups/overlays...
+    [i] No popups detected
+Using LLM to identify signup button...
+  -> Found 68 button/link candidates
+  -> Sending first 20 to LLM for analysis
+
+  [DEBUG] Candidates sent to LLM:
+    1. 'Solutions'
+    2. 'Resources'
+    3. 'Why we build Shopify'
+    4. 'USA | English'
+    5. 'Pricing'
+    6. 'Enterprise'
+    7. 'Winter Edition'
+    8. 'Log in'
+    9. 'Start for free'
+    10. 'Start for free'
+    11. 'Pick a plan that fits'
+    12. 'Get a stunning store'
+    13. 'Shopify POS'
+    14. 'multichannel integration'
+    15. 'Shopify Checkout'
+    16. 'Shopify Audiences'
+    17. 'integrated marketing tools'
+    18. 'insightful analytics'
+    19. 'custom experiences for wholesale buyers'
+    20. 'Shopify Shipping'
+
+  [DEBUG] Calling Ollama...
+  [DEBUG] LLM raw response: '9, 10'
+  [+] LLM selected #9: 'Start for free'
+  [+] Found signup button: 'Start for free'
+  -> Clicking...
+
+######################################################################
+STEP 3: SIGNUP PAGE TEST
+######################################################################
+
+======================================================================
+Testing: SIGNUP PAGE
+URL: https://accounts.shopify.com/signup?rid=23166832-ab06-48f0-94dd-ed511a5c9e2e
+======================================================================
+
+  -> Checking for popups/overlays...
+    [i] No popups detected
+Test 1 (PRIORITY): Language/Locale Selector Check
+Checking if user can manually select their language...
+  [+] Found language/locale selector
+  [!] PARTIAL: Content changed but language unclear
+
+Test 2: URL Culture Code Check
+  [i] No culture code in URL
+
+Test 3: Target Language Check (Spanish)
+  [X] FAIL: Page is NOT in Spanish
+    Evidence: No Spanish content detected
+
+======================================================================
+FINAL REPORT
+======================================================================
+
+HOMEPAGE:
+  [i] locale_selector: N/A
+  [i] url_culture_match: N/A
+  [X] page_language: FAIL
+
+SIGNUP PAGE:
+  [!] locale_selector: PARTIAL
+  [i] url_culture_match: N/A
+  [X] page_language: FAIL
+
+----------------------------------------------------------------------
+Overall: 0/3 tests passed
+
+[X] POOR: Limited or no localization support
+======================================================================
+
+Press Enter to close browser...Traceback (most recent call last):
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 798, in <module>
+    audit.run_full_audit()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 727, in run_full_audit
+    input("\nPress Enter to close browser...")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+EOFError: EOF when reading a line
+ 
+------------------------------------------ 
+ 
+========================================== 
+TEST 2: www.stripe.com 
+========================================== 
+
+====================================================================
+            SIGN-UP LOCALIZATION AUDIT v2
+           "Do You Really Welcome New Users?"
+====================================================================
+    
+Enter base URL (e.g., https://www.stripe.com): Enter target locale [es]: Traceback (most recent call last):
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 436, in find_signup_button_with_llm
+    print(f"    {i+1}. '{display_text}'")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\ufffd' in position 9: character maps to <undefined>
+
+======================================================================
+SIGN-UP LOCALIZATION AUDIT
+Site: www.stripe.com
+Target Locale: es (Spanish)
+======================================================================
+
+Launching browser with Spanish locale...
+
+######################################################################
+STEP 1: HOMEPAGE TEST
+######################################################################
+
+======================================================================
+Testing: HOMEPAGE
+URL: https://stripe.com/en-ca
+======================================================================
+
+  -> Checking for popups/overlays...
+    [i] No popups detected
+Test 1 (PRIORITY): Language/Locale Selector Check
+Checking if user can manually select their language...
+  -> Using LLM to find language selector...
+  [i] No language selector found
+  -> Checking URL-based localization instead...
+
+Test 2: URL Culture Code Check
+  [+] Found culture code in URL: 'en-ca'
+  [+] PASS: Page language matches URL culture code
+    URL locale: en-ca, Page language: en-CA
+    Evidence: HTML lang attribute matches
+
+  [CA] BONUS TEST: Canada Bilingual Support
+  -> Detected en-ca. Testing if fr-ca is supported...
+  -> Navigating to: https://stripe.com/fr-ca
+  -> Checking for popups/overlays...
+    [i] No popups detected
+  [+] PASS: French-Canada (fr-ca) is supported!
+    Evidence: HTML lang attribute matches
+  [X] ERROR testing fr-ca: 'charmap' codec can't encode character '\u2705' in position 48: character maps to <undefined>
+
+Test 3: Target Language Check (Spanish)
+  [X] FAIL: Page is NOT in Spanish
+    Evidence: No Spanish content detected
+
+######################################################################
+STEP 2: FIND SIGNUP BUTTON
+######################################################################
+
+Preparing page for button detection...
+  -> Checking for popups/overlays...
+    [i] No popups detected
+Using LLM to identify signup button...
+  -> Found 120 button/link candidates
+  -> Sending first 20 to LLM for analysis
+
+  [DEBUG] Candidates sent to LLM:
+    1. 'Produits'
+    2. 'Solutions'
+  [X] Exception in find_signup_button_with_llm: 'charmap' codec can't encode character '\ufffd' in position 9: character maps to <undefined>
+  [X] Could not identify signup button
+
+======================================================================
+FINAL REPORT
+======================================================================
+
+HOMEPAGE:
+  [i] locale_selector: N/A
+  [+] url_culture_match: PASS
+  ? french_canada_support: ERROR
+  [X] page_language: FAIL
+
+SIGNUP PAGE:
+  [X] Signup button not found
+
+----------------------------------------------------------------------
+Overall: 1/4 tests passed
+
+[X] POOR: Limited or no localization support
+======================================================================
+
+Press Enter to close browser...Traceback (most recent call last):
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 798, in <module>
+    audit.run_full_audit()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 727, in run_full_audit
+    input("\nPress Enter to close browser...")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+EOFError: EOF when reading a line
+ 
+------------------------------------------ 
+ 
+========================================== 
+TEST 3: www.amazon.com 
+========================================== 
+
+====================================================================
+            SIGN-UP LOCALIZATION AUDIT v2
+           "Do You Really Welcome New Users?"
+====================================================================
+    
+Enter base URL (e.g., https://www.stripe.com): Enter target locale [es]: Traceback (most recent call last):
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 436, in find_signup_button_with_llm
+    print(f"    {i+1}. '{display_text}'")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\ufffd' in position 19: character maps to <undefined>
+
+======================================================================
+SIGN-UP LOCALIZATION AUDIT
+Site: www.amazon.com
+Target Locale: es (Spanish)
+======================================================================
+
+Launching browser with Spanish locale...
+
+######################################################################
+STEP 1: HOMEPAGE TEST
+######################################################################
+
+======================================================================
+Testing: HOMEPAGE
+URL: https://www.amazon.com/
+======================================================================
+
+  -> Checking for popups/overlays...
+    [i] No popups detected
+Test 1 (PRIORITY): Language/Locale Selector Check
+Checking if user can manually select their language...
+  -> Using LLM to find language selector...
+  [i] No language selector found
+  -> Checking URL-based localization instead...
+
+Test 2: URL Culture Code Check
+  [i] No culture code in URL
+
+Test 3: Target Language Check (Spanish)
+  [+] PASS: Page is in Spanish
+    Evidence: HTML lang attribute matches
+
+######################################################################
+STEP 2: FIND SIGNUP BUTTON
+######################################################################
+
+Preparing page for button detection...
+  -> Checking for popups/overlays...
+    [i] No popups detected
+Using LLM to identify signup button...
+  -> Found 139 button/link candidates
+  -> Sending first 20 to LLM for analysis
+
+  [DEBUG] Candidates sent to LLM:
+  [X] Exception in find_signup_button_with_llm: 'charmap' codec can't encode character '\ufffd' in position 19: character maps to <undefined>
+  [X] Could not identify signup button
+
+======================================================================
+FINAL REPORT
+======================================================================
+
+HOMEPAGE:
+  [i] locale_selector: N/A
+  [i] url_culture_match: N/A
+  [+] page_language: PASS
+
+SIGNUP PAGE:
+  [X] Signup button not found
+
+----------------------------------------------------------------------
+Overall: 1/2 tests passed
+
+[!] PARTIAL: Some localization support exists
+======================================================================
+
+Press Enter to close browser...Traceback (most recent call last):
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 798, in <module>
+    audit.run_full_audit()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 727, in run_full_audit
+    input("\nPress Enter to close browser...")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+EOFError: EOF when reading a line
+ 
+------------------------------------------ 
+ 
+========================================== 
+TEST 4: www.bbc.com 
+========================================== 
+
+====================================================================
+            SIGN-UP LOCALIZATION AUDIT v2
+           "Do You Really Welcome New Users?"
+====================================================================
+    
+Enter base URL (e.g., https://www.stripe.com): Enter target locale [es]: 
+======================================================================
+SIGN-UP LOCALIZATION AUDIT
+Site: www.bbc.com
+Target Locale: es (Spanish)
+======================================================================
+
+Launching browser with Spanish locale...
+
+######################################################################
+STEP 1: HOMEPAGE TEST
+######################################################################
+
+======================================================================
+Testing: HOMEPAGE
+URL: https://www.bbc.com/
+======================================================================
+
+  -> Checking for popups/overlays...
+    [i] No popups detected
+Test 1 (PRIORITY): Language/Locale Selector Check
+Checking if user can manually select their language...
+  -> Using LLM to find language selector...
+  [i] No language selector found
+  -> Checking URL-based localization instead...
+
+Test 2: URL Culture Code Check
+  [i] No culture code in URL
+
+Test 3: Target Language Check (Spanish)
+  [X] FAIL: Page is NOT in Spanish
+    Evidence: No Spanish content detected
+
+######################################################################
+STEP 2: FIND SIGNUP BUTTON
+######################################################################
+
+Preparing page for button detection...
+  -> Checking for popups/overlays...
+    [i] No popups detected
+Using LLM to identify signup button...
+  -> Found 143 button/link candidates
+  -> Sending first 20 to LLM for analysis
+
+  [DEBUG] Candidates sent to LLM:
+    1. 'Register'
+    2. 'Sign In'
+    3. 'Save'
+    4. 'Save'
+    5. 'Save'
+    6. 'Save'
+    7. 'Save'
+    8. 'Save'
+    9. 'Save'
+    10. 'Save'
+    11. 'Save'
+    12. 'Save'
+    13. 'Save'
+    14. 'Save'
+    15. 'Save'
+    16. 'Save'
+    17. 'Save'
+    18. 'Save'
+    19. 'Save'
+    20. 'Save'
+
+  [DEBUG] Calling Ollama...
+  [DEBUG] LLM raw response: 'I don't see any'
+  [X] Could not extract number from LLM response (got text instead)
+
+  -> LLM failed, using multilingual keyword fallback...
+  [DEBUG] Checking 32 multilingual patterns...
+  [+] Fallback matched 'register' in candidate #1: 'Register'
+  [+] Found signup button: 'Register'
+  -> Clicking...
+
+######################################################################
+STEP 3: SIGNUP PAGE TEST
+######################################################################
+
+======================================================================
+Testing: SIGNUP PAGE
+URL: https://account.bbc.com/auth/identifier/signin?realm=%2F&clientId=Account&action=register&ptrt=https%3A%2F%2Fwww.bbc.com%2F&userOrigin=BBCS_BBC&purpose=free&mvtUserId=b63846ac-e213-4eb2-acea-c78a8e036103&isCasso=false&redirectUri=https%3A%2F%2Fsession.bbc.com%2Fsession%2Fcallback%3Frealm%3D%2F&service=IdRegisterService&nonce=i8CJa3rL-7FIp2FKAcsBlVAf6Cjg2zSH_kTs
+======================================================================
+
+  -> Checking for popups/overlays...
+    [+] Dismissed 1 popup(s): modal
+Test 1 (PRIORITY): Language/Locale Selector Check
+Checking if user can manually select their language...
+  -> Using LLM to find language selector...
+  [i] No language selector found
+  -> Checking URL-based localization instead...
+
+Test 2: URL Culture Code Check
+  [i] No culture code in URL
+
+Test 3: Target Language Check (Spanish)
+  [X] FAIL: Page is NOT in Spanish
+    Evidence: No Spanish content detected
+
+======================================================================
+FINAL REPORT
+======================================================================
+
+HOMEPAGE:
+  [i] locale_selector: N/A
+  [i] url_culture_match: N/A
+  [X] page_language: FAIL
+
+SIGNUP PAGE:
+  [i] locale_selector: N/A
+  [i] url_culture_match: N/A
+  [X] page_language: FAIL
+
+----------------------------------------------------------------------
+Overall: 0/2 tests passed
+
+[X] POOR: Limited or no localization support
+======================================================================
+
+Press Enter to close browser...Traceback (most recent call last):
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 798, in <module>
+    audit.run_full_audit()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 727, in run_full_audit
+    input("\nPress Enter to close browser...")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+EOFError: EOF when reading a line
+ 
+------------------------------------------ 
+ 
+========================================== 
+TEST 5: www.netflix.com 
+========================================== 
+
+====================================================================
+            SIGN-UP LOCALIZATION AUDIT v2
+           "Do You Really Welcome New Users?"
+====================================================================
+    
+Enter base URL (e.g., https://www.stripe.com): Enter target locale [es]: 
+======================================================================
+SIGN-UP LOCALIZATION AUDIT
+Site: www.netflix.com
+Target Locale: es (Spanish)
+======================================================================
+
+Launching browser with Spanish locale...
+
+######################################################################
+STEP 1: HOMEPAGE TEST
+######################################################################
+
+======================================================================
+Testing: HOMEPAGE
+URL: https://www.netflix.com/ca/
+======================================================================
+
+  -> Checking for popups/overlays...
+    [+] Dismissed 1 popup(s): modal
+Test 1 (PRIORITY): Language/Locale Selector Check
+Checking if user can manually select their language...
+  -> Using LLM to find language selector...
+  [i] No language selector found
+  -> Checking URL-based localization instead...
+
+Test 2: URL Culture Code Check
+  [+] Found culture code in URL: 'ca'
+  [X] FAIL: Page language doesn't match URL culture code
+    URL locale: ca, Expected: ca, Detected: en
+
+Test 3: Target Language Check (Spanish)
+  [X] FAIL: Page is NOT in Spanish
+    Evidence: No Spanish content detected
+
+######################################################################
+STEP 2: FIND SIGNUP BUTTON
+######################################################################
+
+Preparing page for button detection...
+  -> Checking for popups/overlays...
+    [i] No popups detected
+Using LLM to identify signup button...
+  -> Found 41 button/link candidates
+  -> Sending first 20 to LLM for analysis
+
+  [DEBUG] Candidates sent to LLM:
+    1. 'Get Started'
+    2. 'Learn More'
+    3. 'Stranger Things 1 1'
+    4. 'The Rip 2 2'
+    5. 'Emily in Paris 3 3'
+    6. 'HIS & HERS 4 4'
+    7. 'People We Meet on Vacation 5 5'
+    8. 'Sean Combs: The Reckoning 6 6'
+    9. 'Wake Up Dead Man: A Knives Out Mystery 7 7'
+    10. 'KPop Demon Hunters 8 8'
+    11. 'Man Vs Baby 9 9'
+    12. 'Run Away 10 10'
+    13. 'What is Netflix?'
+    14. 'How much does Netflix cost?'
+    15. 'Where can I watch?'
+    16. 'How do I cancel?'
+    17. 'What can I watch on Netflix?'
+    18. 'Is Netflix good for kids?'
+    19. 'Get Started'
+    20. 'Learn more.'
+
+  [DEBUG] Calling Ollama...
+  [DEBUG] LLM raw response: 'I'm sorry, but'
+  [X] Could not extract number from LLM response (got text instead)
+
+  -> LLM failed, using multilingual keyword fallback...
+  [DEBUG] Checking 32 multilingual patterns...
+  [+] Fallback matched 'get started' in candidate #1: 'Get Started'
+  [+] Found signup button: 'Get Started'
+  -> Clicking...
+
+######################################################################
+STEP 3: SIGNUP PAGE TEST
+######################################################################
+
+======================================================================
+Testing: SIGNUP PAGE
+URL: https://www.netflix.com/ca/
+======================================================================
+
+  -> Checking for popups/overlays...
+    [i] No popups detected
+Test 1 (PRIORITY): Language/Locale Selector Check
+Checking if user can manually select their language...
+  -> Using LLM to find language selector...
+  [i] No language selector found
+  -> Checking URL-based localization instead...
+
+Test 2: URL Culture Code Check
+  [+] Found culture code in URL: 'ca'
+  [X] FAIL: Page language doesn't match URL culture code
+    URL locale: ca, Expected: ca, Detected: en
+
+Test 3: Target Language Check (Spanish)
+  [X] FAIL: Page is NOT in Spanish
+    Evidence: No Spanish content detected
+
+======================================================================
+FINAL REPORT
+======================================================================
+
+HOMEPAGE:
+  [i] locale_selector: N/A
+  [X] url_culture_match: FAIL
+  [X] page_language: FAIL
+
+SIGNUP PAGE:
+  [i] locale_selector: N/A
+  [X] url_culture_match: FAIL
+  [X] page_language: FAIL
+
+----------------------------------------------------------------------
+Overall: 0/4 tests passed
+
+[X] POOR: Limited or no localization support
+======================================================================
+
+Press Enter to close browser...Traceback (most recent call last):
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 798, in <module>
+    audit.run_full_audit()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 727, in run_full_audit
+    input("\nPress Enter to close browser...")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+EOFError: EOF when reading a line
+ 
+------------------------------------------ 
+ 
+========================================== 
+TEST 6: www.walmart.com 
+========================================== 
+
+====================================================================
+            SIGN-UP LOCALIZATION AUDIT v2
+           "Do You Really Welcome New Users?"
+====================================================================
+    
+Enter base URL (e.g., https://www.stripe.com): Enter target locale [es]: Traceback (most recent call last):
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 436, in find_signup_button_with_llm
+    print(f"    {i+1}. '{display_text}'")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\ufffd' in position 30: character maps to <undefined>
+
+======================================================================
+SIGN-UP LOCALIZATION AUDIT
+Site: www.walmart.com
+Target Locale: es (Spanish)
+======================================================================
+
+Launching browser with Spanish locale...
+
+######################################################################
+STEP 1: HOMEPAGE TEST
+######################################################################
+
+======================================================================
+Testing: HOMEPAGE
+URL: https://www.walmart.com/
+======================================================================
+
+  -> Checking for popups/overlays...
+    [i] No popups detected
+Test 1 (PRIORITY): Language/Locale Selector Check
+Checking if user can manually select their language...
+  -> Using LLM to find language selector...
+  [i] No language selector found
+  -> Checking URL-based localization instead...
+
+Test 2: URL Culture Code Check
+  [i] No culture code in URL
+
+Test 3: Target Language Check (Spanish)
+  [+] PASS: Page is in Spanish
+    Evidence: HTML lang attribute matches
+
+######################################################################
+STEP 2: FIND SIGNUP BUTTON
+######################################################################
+
+Preparing page for button detection...
+  -> Checking for popups/overlays...
+    [i] No popups detected
+Using LLM to identify signup button...
+  -> Found 23 button/link candidates
+  -> Sending first 20 to LLM for analysis
+
+  [DEBUG] Candidates sent to LLM:
+    1. '$0.00'
+    2. 'Departamentos'
+    3. 'Servicios'
+    4. 'Agregar'
+    5. 'Agregar'
+    6. 'Agregar'
+  [X] Exception in find_signup_button_with_llm: 'charmap' codec can't encode character '\ufffd' in position 30: character maps to <undefined>
+  [X] Could not identify signup button
+
+======================================================================
+FINAL REPORT
+======================================================================
+
+HOMEPAGE:
+  [i] locale_selector: N/A
+  [i] url_culture_match: N/A
+  [+] page_language: PASS
+
+SIGNUP PAGE:
+  [X] Signup button not found
+
+----------------------------------------------------------------------
+Overall: 1/2 tests passed
+
+[!] PARTIAL: Some localization support exists
+======================================================================
+
+Press Enter to close browser...Traceback (most recent call last):
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 798, in <module>
+    audit.run_full_audit()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 727, in run_full_audit
+    input("\nPress Enter to close browser...")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+EOFError: EOF when reading a line
+ 
+------------------------------------------ 
+ 
+========================================== 
+TEST 7: www.cnn.com 
+========================================== 
+
+====================================================================
+            SIGN-UP LOCALIZATION AUDIT v2
+           "Do You Really Welcome New Users?"
+====================================================================
+    
+Enter base URL (e.g., https://www.stripe.com): Enter target locale [es]: Traceback (most recent call last):
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 436, in find_signup_button_with_llm
+    print(f"    {i+1}. '{display_text}'")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\ufffd' in position 19: character maps to <undefined>
+
+======================================================================
+SIGN-UP LOCALIZATION AUDIT
+Site: www.cnn.com
+Target Locale: es (Spanish)
+======================================================================
+
+Launching browser with Spanish locale...
+
+######################################################################
+STEP 1: HOMEPAGE TEST
+######################################################################
+
+======================================================================
+Testing: HOMEPAGE
+URL: https://www.cnn.com/
+======================================================================
+
+  -> Checking for popups/overlays...
+    [+] Dismissed 2 popup(s): cookie-banner, modal
+Test 1 (PRIORITY): Language/Locale Selector Check
+Checking if user can manually select their language...
+  -> Using LLM to find language selector...
+  [i] No language selector found
+  -> Checking URL-based localization instead...
+
+Test 2: URL Culture Code Check
+  [i] No culture code in URL
+
+Test 3: Target Language Check (Spanish)
+  [X] FAIL: Page is NOT in Spanish
+    Evidence: No Spanish content detected
+
+######################################################################
+STEP 2: FIND SIGNUP BUTTON
+######################################################################
+
+Preparing page for button detection...
+  -> Checking for popups/overlays...
+    [+] Dismissed 2 popup(s): cookie-banner, modal
+Using LLM to identify signup button...
+  -> Found 343 button/link candidates
+  -> Sending first 20 to LLM for analysis
+
+  [DEBUG] Candidates sent to LLM:
+    1. 'Sign in'
+    2. 'Sign in'
+  [X] Exception in find_signup_button_with_llm: 'charmap' codec can't encode character '\ufffd' in position 19: character maps to <undefined>
+  [X] Could not identify signup button
+
+======================================================================
+FINAL REPORT
+======================================================================
+
+HOMEPAGE:
+  [i] locale_selector: N/A
+  [i] url_culture_match: N/A
+  [X] page_language: FAIL
+
+SIGNUP PAGE:
+  [X] Signup button not found
+
+----------------------------------------------------------------------
+Overall: 0/2 tests passed
+
+[X] POOR: Limited or no localization support
+======================================================================
+
+Press Enter to close browser...Traceback (most recent call last):
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 798, in <module>
+    audit.run_full_audit()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 727, in run_full_audit
+    input("\nPress Enter to close browser...")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+EOFError: EOF when reading a line
+ 
+------------------------------------------ 
+ 
+========================================== 
+TEST 8: www.openai.com 
+========================================== 
+
+====================================================================
+            SIGN-UP LOCALIZATION AUDIT v2
+           "Do You Really Welcome New Users?"
+====================================================================
+    
+Enter base URL (e.g., https://www.stripe.com): Enter target locale [es]: Traceback (most recent call last):
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 436, in find_signup_button_with_llm
+    print(f"    {i+1}. '{display_text}'")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\ufffd' in position 20: character maps to <undefined>
+
+======================================================================
+SIGN-UP LOCALIZATION AUDIT
+Site: www.openai.com
+Target Locale: es (Spanish)
+======================================================================
+
+Launching browser with Spanish locale...
+
+######################################################################
+STEP 1: HOMEPAGE TEST
+######################################################################
+
+======================================================================
+Testing: HOMEPAGE
+URL: https://openai.com/es-ES/
+======================================================================
+
+  -> Checking for popups/overlays...
+    [+] Dismissed 1 popup(s): cookie-banner
+Test 1 (PRIORITY): Language/Locale Selector Check
+Checking if user can manually select their language...
+  -> Using LLM to find language selector...
+  [i] No language selector found
+  -> Checking URL-based localization instead...
+
+Test 2: URL Culture Code Check
+  [+] Found culture code in URL: 'es-ES'
+  [+] PASS: Page language matches URL culture code
+    URL locale: es-ES, Page language: es-ES
+    Evidence: HTML lang attribute matches
+
+Test 3: Target Language Check (Spanish)
+  [+] PASS: Page is in Spanish
+    Evidence: HTML lang attribute matches
+
+######################################################################
+STEP 2: FIND SIGNUP BUTTON
+######################################################################
+
+Preparing page for button detection...
+  -> Checking for popups/overlays...
+    [+] Dismissed 1 popup(s): cookie-banner
+Using LLM to identify signup button...
+  -> Found 92 button/link candidates
+  -> Sending first 20 to LLM for analysis
+
+  [DEBUG] Candidates sent to LLM:
+  [X] Exception in find_signup_button_with_llm: 'charmap' codec can't encode character '\ufffd' in position 20: character maps to <undefined>
+  [X] Could not identify signup button
+
+======================================================================
+FINAL REPORT
+======================================================================
+
+HOMEPAGE:
+  [i] locale_selector: N/A
+  [+] url_culture_match: PASS
+  [+] page_language: PASS
+
+SIGNUP PAGE:
+  [X] Signup button not found
+
+----------------------------------------------------------------------
+Overall: 2/3 tests passed
+
+[!] PARTIAL: Some localization support exists
+======================================================================
+
+Press Enter to close browser...Traceback (most recent call last):
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 798, in <module>
+    audit.run_full_audit()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 727, in run_full_audit
+    input("\nPress Enter to close browser...")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+EOFError: EOF when reading a line
+ 
+------------------------------------------ 
+ 
+========================================== 
+TEST 9: www.microsoft.com 
+========================================== 
+
+====================================================================
+            SIGN-UP LOCALIZATION AUDIT v2
+           "Do You Really Welcome New Users?"
+====================================================================
+    
+Enter base URL (e.g., https://www.stripe.com): Enter target locale [es]: 
+======================================================================
+SIGN-UP LOCALIZATION AUDIT
+Site: www.microsoft.com
+Target Locale: es (Spanish)
+======================================================================
+
+Launching browser with Spanish locale...
+
+######################################################################
+STEP 1: HOMEPAGE TEST
+######################################################################
+
+======================================================================
+Testing: HOMEPAGE
+URL: https://www.microsoft.com/en-us/
+======================================================================
+
+  -> Checking for popups/overlays...
+    [+] Dismissed 1 popup(s): cookie-banner
+Test 1 (PRIORITY): Language/Locale Selector Check
+Checking if user can manually select their language...
+  -> Using LLM to find language selector...
+  [i] No language selector found
+  -> Checking URL-based localization instead...
+
+Test 2: URL Culture Code Check
+  [+] Found culture code in URL: 'en-us'
+  [+] PASS: Page language matches URL culture code
+    URL locale: en-us, Page language: en-US
+    Evidence: HTML lang attribute matches
+
+Test 3: Target Language Check (Spanish)
+  [X] FAIL: Page is NOT in Spanish
+    Evidence: No Spanish content detected
+
+######################################################################
+STEP 2: FIND SIGNUP BUTTON
+######################################################################
+
+Preparing page for button detection...
+  -> Checking for popups/overlays...
+    [i] No popups detected
+Using LLM to identify signup button...
+  -> Found 96 button/link candidates
+  -> Sending first 20 to LLM for analysis
+
+  [DEBUG] Candidates sent to LLM:
+    1. 'All Microsoft'
+    2. 'Search'
+    3. 'Which PC is right for me?'
+    4. 'Sign in to my account'
+    5. 'How can my business use Azure?'
+    6. 'Chat now'
+    7. 'No thanks'
+    8. 'Microsoft'
+    9. 'Microsoft 365'
+    10. 'Teams'
+    11. 'Copilot'
+    12. 'Windows'
+    13. 'Surface'
+    14. 'Xbox'
+    15. 'Deals'
+    16. 'Small Business'
+    17. 'Support'
+    18. 'Cart'
+    19. 'Sign in to your account Sign in'
+    20. 'Learn more'
+
+  [DEBUG] Calling Ollama...
+  [DEBUG] LLM raw response: 'I'm sorry but I'
+  [X] Could not extract number from LLM response (got text instead)
+
+  -> LLM failed, using multilingual keyword fallback...
+  [DEBUG] Checking 32 multilingual patterns...
+  [X] No signup button found (LLM + fallback both failed)
+  [DEBUG] None of the 20 candidates matched any pattern
+  [X] Could not identify signup button
+
+======================================================================
+FINAL REPORT
+======================================================================
+
+HOMEPAGE:
+  [i] locale_selector: N/A
+  [+] url_culture_match: PASS
+  [X] page_language: FAIL
+
+SIGNUP PAGE:
+  [X] Signup button not found
+
+----------------------------------------------------------------------
+Overall: 1/3 tests passed
+
+[X] POOR: Limited or no localization support
+======================================================================
+
+Press Enter to close browser...Traceback (most recent call last):
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 798, in <module>
+    audit.run_full_audit()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 727, in run_full_audit
+    input("\nPress Enter to close browser...")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+EOFError: EOF when reading a line
+ 
+------------------------------------------ 
+ 
+========================================== 
+TEST 10: www.anthropic.com 
+========================================== 
+
+====================================================================
+            SIGN-UP LOCALIZATION AUDIT v2
+           "Do You Really Welcome New Users?"
+====================================================================
+    
+Enter base URL (e.g., https://www.stripe.com): Enter target locale [es]: 
+======================================================================
+SIGN-UP LOCALIZATION AUDIT
+Site: www.anthropic.com
+Target Locale: es (Spanish)
+======================================================================
+
+Launching browser with Spanish locale...
+
+######################################################################
+STEP 1: HOMEPAGE TEST
+######################################################################
+
+======================================================================
+Testing: HOMEPAGE
+URL: https://www.anthropic.com/
+======================================================================
+
+  -> Checking for popups/overlays...
+    [+] Dismissed 1 popup(s): cookie-banner
+Test 1 (PRIORITY): Language/Locale Selector Check
+Checking if user can manually select their language...
+  -> Using LLM to find language selector...
+  [i] No language selector found
+  -> Checking URL-based localization instead...
+
+Test 2: URL Culture Code Check
+  [i] No culture code in URL
+
+Test 3: Target Language Check (Spanish)
+  [X] FAIL: Page is NOT in Spanish
+    Evidence: No Spanish content detected
+
+######################################################################
+STEP 2: FIND SIGNUP BUTTON
+######################################################################
+
+Preparing page for button detection...
+  -> Checking for popups/overlays...
+    [i] No popups detected
+Using LLM to identify signup button...
+  -> Found 74 button/link candidates
+  -> Sending first 20 to LLM for analysis
+
+  [DEBUG] Candidates sent to LLM:
+    1. 'Privacy choices'
+    2. 'Research'
+    3. 'Economic Futures'
+    4. 'News'
+    5. 'Try Claude'
+    6. 'research'
+    7. 'products'
+    8. 'Read announcement'
+    9. 'Learn more about our views on AI Safety'
+    10. 'Learn more about our Responsible Scaling Policy'
+    11. 'Access Anthropic Academy'
+    12. 'See open roles'
+    13. 'Speak with sales'
+    14. 'Claude'
+    15. 'Claude Code'
+    16. 'Claude in Chrome'
+    17. 'Claude in Excel'
+    18. 'Claude in Slack'
+    19. 'Skills'
+    20. 'Max plan'
+
+  [DEBUG] Calling Ollama...
+  [DEBUG] LLM raw response: 'I don't see any'
+  [X] Could not extract number from LLM response (got text instead)
+
+  -> LLM failed, using multilingual keyword fallback...
+  [DEBUG] Checking 32 multilingual patterns...
+  [X] No signup button found (LLM + fallback both failed)
+  [DEBUG] None of the 20 candidates matched any pattern
+  [X] Could not identify signup button
+
+======================================================================
+FINAL REPORT
+======================================================================
+
+HOMEPAGE:
+  [i] locale_selector: N/A
+  [i] url_culture_match: N/A
+  [X] page_language: FAIL
+
+SIGNUP PAGE:
+  [X] Signup button not found
+
+----------------------------------------------------------------------
+Overall: 0/2 tests passed
+
+[X] POOR: Limited or no localization support
+======================================================================
+
+Press Enter to close browser...Traceback (most recent call last):
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 798, in <module>
+    audit.run_full_audit()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\hwang\Downloads\signup_localization_audit_v2_integrated.py", line 727, in run_full_audit
+    input("\nPress Enter to close browser...")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+EOFError: EOF when reading a line
+ 
+------------------------------------------ 
+ 
+========================================== 
+TEST SUITE COMPLETED 
+========================================== 
