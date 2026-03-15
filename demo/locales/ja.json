@@ -1,0 +1,20 @@
+{
+  "welcome_heading": "アクメにようこそ",
+  "sign_in_link": "ログイン",
+  "hero_heading": "無料トライアルを開始してください",
+  "label_name": "氏名",
+  "placeholder_name": "氏名を入力してください",
+  "label_email": "会社のメールアドレス",
+  "placeholder_email": "you@company.com",
+  "label_password": "パスワード",
+  "placeholder_password": "8文字以上",
+  "submit_button": "無料アカウントを作成する",
+  "terms_text": "サービスの利用を開始することで、",
+  "terms_link": "サービス条項",
+  "privacy_link": "プライバシーポリシー",
+  "feature_1": "✓ 14日間の無料トライアル",
+  "feature_2": "✓ セットアップ料金なし",
+  "feature_3": "✓ キャンセル可能",
+  "trusted_by": "世界中の10,000以上のチームに信頼されています",
+  "legal_text": "すでにアカウントを持っていますか?"
+}

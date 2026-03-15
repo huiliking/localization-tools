@@ -1,0 +1,20 @@
+{
+  "welcome_heading": "Willkommen bei Acme",
+  "sign_in_link": "Anmelden",
+  "hero_heading": "Starte deinen kostenlosen Probtags heute",
+  "label_name": "Vollständiger Name",
+  "placeholder_name": "Gib deinen vollständigen Namen ein",
+  "label_email": "Geschäftliche E-Mail",
+  "placeholder_email": "du@unternehmen.de",
+  "label_password": "Passwort",
+  "placeholder_password": "Mindestens 8 Zeichen",
+  "submit_button": "Kostenlosen Account erstellen",
+  "terms_text": "Indem du dich anmeldest, stimmst du unseren",
+  "terms_link": "Nutzungsbedingungen",
+  "privacy_link": "Datenschutzrichtlinie",
+  "feature_1": "✓ 14-tägiger kostenloser Probtags",
+  "feature_2": "✓ Keine Anfangsgebühren",
+  "feature_3": "✓ Kündigbar jederzeit",
+  "trusted_by": "Von über 10.000 Teams weltweit vertraut",
+  "legal_text": "Hast du bereits einen Account?"
+}

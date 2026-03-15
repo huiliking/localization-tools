@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acme – Signup</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f7fa;
+      color: #1a1a2e;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.08);
+      width: 100%;
+      max-width: 440px;
+      padding: 2.5rem;
+    }
+
+    /* Language switcher */
+    .lang-bar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 1.5rem;
+      gap: .5rem;
+    }
+    .lang-bar button {
+      background: none;
+      border: 1px solid #dde1ea;
+      border-radius: 6px;
+      padding: .25rem .65rem;
+      font-size: .8rem;
+      cursor: pointer;
+      color: #555;
+      transition: background .15s, color .15s;
+    }
+    .lang-bar button.active,
+    .lang-bar button:hover {
+      background: #4f46e5;
+      color: #fff;
+      border-color: #4f46e5;
+    }
+
+    header { margin-bottom: 1.75rem; }
+    header h1 { font-size: 1.55rem; font-weight: 700; margin-bottom: .3rem; }
+    header p  { font-size: .9rem; color: #666; }
+    header a  { color: #4f46e5; text-decoration: none; }
+
+    .hero { margin-bottom: 1.75rem; }
+    .hero h2 { font-size: 1.1rem; font-weight: 600; margin-bottom: .5rem; }
+
+    .field { margin-bottom: 1rem; }
+    .field label { display: block; font-size: .85rem; font-weight: 500; margin-bottom: .35rem; }
+    .field input {
+      width: 100%;
+      padding: .6rem .8rem;
+      border: 1px solid #dde1ea;
+      border-radius: 8px;
+      font-size: .95rem;
+      outline: none;
+      transition: border-color .15s;
+    }
+    .field input:focus { border-color: #4f46e5; }
+
+    .btn-submit {
+      width: 100%;
+      padding: .75rem;
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: .5rem;
+      transition: background .15s;
+    }
+    .btn-submit:hover { background: #4338ca; }
+
+    .terms {
+      font-size: .78rem;
+      color: #888;
+      margin-top: .85rem;
+      line-height: 1.5;
+    }
+    .terms a { color: #4f46e5; text-decoration: none; }
+
+    .social-proof {
+      margin-top: 1.75rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid #f0f0f5;
+      font-size: .82rem;
+      color: #666;
+    }
+    .social-proof p { margin-bottom: .5rem; }
+    .social-proof ul { list-style: none; display: flex; flex-direction: column; gap: .2rem; }
+  </style>
+</head>
+<body>
+<div class="card">
+
+  <!-- Language switcher -->
+  <div class="lang-bar" id="lang-bar"></div>
+
+  <!-- Header -->
+  <header>
+    <h1 id="welcome_heading"></h1>
+    <p id="legal_text_header"></p>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h2 id="hero_heading"></h2>
+  </section>
+
+  <!-- Form -->
+  <form onsubmit="return false">
+    <div class="field">
+      <label for="name" id="label_name"></label>
+      <input id="name" type="text" />
+    </div>
+    <div class="field">
+      <label for="email" id="label_email"></label>
+      <input id="email" type="email" />
+    </div>
+    <div class="field">
+      <label for="password" id="label_password"></label>
+      <input id="password" type="password" />
+    </div>
+    <button class="btn-submit" id="submit_button"></button>
+    <p class="terms" id="terms_para"></p>
+  </form>
+
+  <!-- Social proof -->
+  <section class="social-proof">
+    <p id="trusted_by"></p>
+    <ul>
+      <li id="feature_1"></li>
+      <li id="feature_2"></li>
+      <li id="feature_3"></li>
+    </ul>
+  </section>
+
+</div>
+
+<script>
+const LANGS = { en: "EN", es: "ES", ja: "JA", de: "DE", fr: "FR" };
+const cache = {};
+
+async function loadLocale(code) {
+  if (cache[code]) return cache[code];
+  const res = await fetch(`locales/${code}.json`);
+  if (!res.ok) throw new Error(`Failed to load locales/${code}.json`);
+  cache[code] = await res.json();
+  return cache[code];
+}
+
+function applyLocale(t, code) {
+  document.getElementById("welcome_heading").textContent = t.welcome_heading;
+  document.getElementById("hero_heading").textContent    = t.hero_heading;
+  document.getElementById("submit_button").textContent   = t.submit_button;
+  document.getElementById("label_name").textContent      = t.label_name      ?? "Full name";
+  document.getElementById("name").placeholder            = t.placeholder_name ?? "";
+  document.getElementById("label_email").textContent     = t.label_email     ?? "Work email";
+  document.getElementById("email").placeholder           = t.placeholder_email ?? "";
+  document.getElementById("label_password").textContent  = t.label_password  ?? "Password";
+  document.getElementById("password").placeholder        = t.placeholder_password ?? "";
+  document.getElementById("trusted_by").textContent      = t.trusted_by      ?? "";
+  document.getElementById("feature_1").textContent       = t.feature_1;
+  document.getElementById("feature_2").textContent       = t.feature_2;
+  document.getElementById("feature_3").textContent       = t.feature_3;
+
+  // Header: "Already have an account? Sign in"
+  const header = document.getElementById("legal_text_header");
+  header.textContent = t.legal_text + " ";
+  const a = document.createElement("a");
+  a.href = "#"; a.textContent = t.sign_in_link;
+  header.appendChild(a);
+
+  // Terms paragraph
+  const terms = document.getElementById("terms_para");
+  terms.textContent = t.terms_text + " ";
+  const tl = document.createElement("a"); tl.href = "#"; tl.textContent = t.terms_link;
+  const pl = document.createElement("a"); pl.href = "#"; pl.textContent = t.privacy_link;
+  terms.appendChild(tl);
+  terms.appendChild(document.createTextNode(" & "));
+  terms.appendChild(pl);
+  terms.appendChild(document.createTextNode("."));
+
+  document.querySelectorAll(".lang-bar button").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.lang === code);
+  });
+
+  document.documentElement.lang = code;
+}
+
+async function switchLang(code) {
+  const t = await loadLocale(code);
+  applyLocale(t, code);
+}
+
+// Build language buttons
+const bar = document.getElementById("lang-bar");
+Object.entries(LANGS).forEach(([code, label]) => {
+  const btn = document.createElement("button");
+  btn.textContent = label;
+  btn.dataset.lang = code;
+  btn.onclick = () => switchLang(code);
+  bar.appendChild(btn);
+});
+
+switchLang("en");
+</script>
+</body>
+</html>

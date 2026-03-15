@@ -1,0 +1,20 @@
+{
+  "welcome_heading": "Bienvenido a Acme",
+  "sign_in_link": "Iniciar sesión",
+  "hero_heading": "Comienza tu prueba gratuita hoy",
+  "label_name": "Nombre completo",
+  "placeholder_name": "Ingresa tu nombre completo",
+  "label_email": "Correo del trabajo",
+  "placeholder_email": "tu@empresa.com",
+  "label_password": "Contraseña",
+  "placeholder_password": "Al menos 8 caracteres",
+  "submit_button": "Crear cuenta gratuita",
+  "terms_text": "Al registrarte, aceptas nuestros",
+  "terms_link": "Condiciones de Servicio",
+  "privacy_link": "Política de Privacidad",
+  "feature_1": "✓ Prueba gratuita de 14 días gratis",
+  "feature_2": "✓ Sin cargos de configuración",
+  "feature_3": "✓ Puedes cancelar en cualquier momento",
+  "trusted_by": "Con la confianza de más de 10.000 equipos en todo el mundo",
+  "legal_text": "¿Ya tienes una cuenta?"
+}

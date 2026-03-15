@@ -1,0 +1,20 @@
+{
+  "welcome_heading": "Bienvenue chez Acme",
+  "sign_in_link": "Se connecter",
+  "hero_heading": "Démarrer votre essai gratuit aujourd'hui",
+  "label_name": "Nom complet",
+  "placeholder_name": "Entrez votre nom complet",
+  "label_email": "E-mail professionnel",
+  "placeholder_email": "vous@entreprise.fr",
+  "label_password": "Mot de passe",
+  "placeholder_password": "Au moins 8 caractères",
+  "submit_button": "Créer un compte gratuit",
+  "terms_text": "En signant, vous acceptez notre",
+  "terms_link": "Conditions d'utilisation",
+  "privacy_link": "Politique de confidentialité",
+  "feature_1": "✓ Essai gratuit pendant 14 jours",
+  "feature_2": "✓ Pas de frais d'installation",
+  "feature_3": "✓ Annuler à tout moment",
+  "trusted_by": "Approuvé par plus de 10 000 équipes dans le monde",
+  "legal_text": "Vous avez déjà un compte?"
+}

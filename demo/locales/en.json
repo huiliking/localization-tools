@@ -1,0 +1,20 @@
+{
+  "welcome_heading": "Welcome to Acme",
+  "sign_in_link": "Sign in",
+  "hero_heading": "Start your free trial today",
+  "label_name": "Full name",
+  "placeholder_name": "Enter your full name",
+  "label_email": "Work email",
+  "placeholder_email": "you@company.com",
+  "label_password": "Password",
+  "placeholder_password": "At least 8 characters",
+  "submit_button": "Create free account",
+  "terms_text": "By signing up, you agree to our",
+  "terms_link": "Terms of Service",
+  "privacy_link": "Privacy Policy",
+  "feature_1": "✓ Free 14-day trial",
+  "feature_2": "✓ No setup fees",
+  "feature_3": "✓ Cancel anytime",
+  "trusted_by": "Trusted by over 10,000 teams worldwide",
+  "legal_text": "Already have an account?"
+}
