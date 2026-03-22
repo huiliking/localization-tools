@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acme Signup — Approach C</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, -apple-system, sans-serif; background: #f8fafc; color: #1e293b; }
+    .banner { background: #166534; color: #fff; padding: .75rem 1.5rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; font-size: .85rem; }
+    .banner-label { font-weight: 700; font-size: .9rem; }
+    .banner-desc { opacity: .85; flex: 1; }
+    .lang-switcher { display: flex; gap: .4rem; flex-wrap: wrap; }
+    .lang-btn { padding: .3rem .7rem; border-radius: 6px; border: 1px solid rgba(255,255,255,.4); background: transparent; color: #fff; cursor: pointer; font-size: .8rem; font-weight: 500; transition: background .1s; }
+    .lang-btn.active, .lang-btn:hover { background: rgba(255,255,255,.2); }
+    .compare-link { color: #a7f3d0; font-weight: 600; text-decoration: none; white-space: nowrap; }
+    .compare-link:hover { text-decoration: underline; }
+    .page { max-width: 900px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 0; border-bottom: 1px solid #e2e8f0; }
+    .nav-logo { font-weight: 800; font-size: 1.3rem; color: #16a34a; }
+    .nav-cta { font-size: .9rem; color: #64748b; }
+    .nav-cta a { color: #16a34a; font-weight: 600; text-decoration: none; }
+    .hero { text-align: center; padding: 3.5rem 1rem 2.5rem; }
+    .hero h1 { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; }
+    .hero-sub { font-size: 1.1rem; color: #475569; max-width: 560px; margin: 0 auto 1.5rem; line-height: 1.6; }
+    .hero-badges { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; }
+    .hero-badges span { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; border-radius: 999px; padding: .3rem .9rem; font-size: .82rem; font-weight: 500; }
+    .plans { padding: 3rem 0 2rem; }
+    .plans h2 { text-align: center; font-size: 1.75rem; font-weight: 800; margin-bottom: .5rem; }
+    .plans-sub { text-align: center; color: #64748b; margin-bottom: 2rem; }
+    .plan-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    @media (max-width: 640px) { .plan-cards { grid-template-columns: 1fr; } }
+    .plan-card { background: #fff; border: 2px solid #e2e8f0; border-radius: 14px; padding: 1.5rem; cursor: pointer; transition: border-color .15s; position: relative; }
+    .plan-card:hover { border-color: #86efac; }
+    .plan-card.featured { border-color: #22c55e; box-shadow: 0 4px 20px rgba(34,197,94,.15); }
+    .plan-badge { display: inline-block; background: #22c55e; color: #fff; font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .2rem .6rem; border-radius: 999px; margin-bottom: .75rem; min-height: 1.4rem; }
+    .plan-name { font-size: 1.15rem; font-weight: 700; margin-bottom: .25rem; }
+    .plan-price { font-size: 1.75rem; font-weight: 800; margin-bottom: .25rem; }
+    .plan-price span { font-size: 1rem; font-weight: 400; color: #64748b; }
+    .plan-desc { font-size: .875rem; color: #64748b; margin-bottom: 1rem; }
+    .plan-card ul { list-style: none; margin-bottom: 1.25rem; }
+    .plan-card li { font-size: .875rem; padding: .3rem 0; color: #334155; }
+    .plan-card li::before { content: "✓ "; color: #22c55e; font-weight: 700; }
+    .plan-btn { width: 100%; padding: .6rem; border-radius: 8px; border: 2px solid #22c55e; background: transparent; color: #16a34a; font-weight: 600; cursor: pointer; font-size: .875rem; transition: background .15s, color .15s; }
+    .plan-card.featured .plan-btn, .plan-btn:hover { background: #22c55e; color: #fff; }
+    .form-section { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 2.5rem; max-width: 520px; margin: 0 auto 3rem; }
+    .form-section h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: .4rem; }
+    .form-sub { color: #64748b; font-size: .9rem; margin-bottom: 1.75rem; }
+    .field { margin-bottom: 1.25rem; }
+    .field label { display: block; font-size: .875rem; font-weight: 600; margin-bottom: .4rem; color: #374151; }
+    .field input, .field select { width: 100%; padding: .6rem .85rem; border: 1px solid #d1d5db; border-radius: 8px; font-size: .9rem; font-family: inherit; color: #1e293b; background: #fff; }
+    .field input:focus, .field select:focus { outline: none; border-color: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,.15); }
+    .field-hint { font-size: .78rem; color: #6b7280; margin-top: .35rem; display: block; }
+    .btn-submit { width: 100%; padding: .85rem; border-radius: 10px; border: none; background: #22c55e; color: #fff; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: .5rem; transition: background .15s; }
+    .btn-submit:hover { background: #16a34a; }
+    .terms { font-size: .78rem; color: #9ca3af; text-align: center; margin-top: 1rem; line-height: 1.6; }
+    .terms a { color: #16a34a; text-decoration: none; }
+    .missing-note { font-size: .7rem; color: #d97706; background: #fffbeb; border: 1px solid #fde68a; border-radius: 4px; padding: .15rem .4rem; margin-left: .4rem; vertical-align: middle; }
+    .social-proof { text-align: center; padding: 2rem 0 3rem; }
+    .trusted-by { font-size: .75rem; font-weight: 600; color: #64748b; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: .06em; }
+    .testimonials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    @media (max-width: 640px) { .testimonials { grid-template-columns: 1fr; } }
+    blockquote { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; text-align: left; }
+    blockquote p { font-size: .875rem; line-height: 1.6; color: #374151; margin-bottom: .75rem; font-style: italic; }
+    blockquote cite { font-size: .78rem; color: #94a3b8; font-style: normal; }
+    .faq { max-width: 600px; margin: 0 auto 3rem; }
+    .faq h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem; text-align: center; }
+    .faq-item { border-bottom: 1px solid #e2e8f0; }
+    .faq-q { width: 100%; text-align: left; background: none; border: none; padding: 1rem 0; font-size: .95rem; font-weight: 600; color: #1e293b; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: .5rem; font-family: inherit; }
+    .faq-q::after { content: "+"; font-size: 1.25rem; color: #22c55e; font-weight: 300; flex-shrink: 0; }
+    .faq-q.open::after { content: "−"; }
+    .faq-a { font-size: .875rem; color: #475569; line-height: 1.7; padding-bottom: 1rem; display: none; }
+    footer { border-top: 1px solid #e2e8f0; padding: 1.5rem 0; text-align: center; }
+    footer p { font-size: .8rem; color: #9ca3af; margin-bottom: .75rem; }
+    footer nav { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+    footer nav a { font-size: .8rem; color: #64748b; text-decoration: none; }
+    footer nav a:hover { color: #16a34a; }
+  </style>
+</head>
+<body>
+
+<div class="banner">
+  <span class="banner-label">Approach C</span>
+  <span class="banner-desc">Fully automated — llama 3.2 extracted strings, translated, and rewrote the component</span>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('en',this)">EN</button>
+    <button class="lang-btn" onclick="setLang('es',this)">ES</button>
+    <button class="lang-btn" onclick="setLang('fr',this)">FR</button>
+    <button class="lang-btn" onclick="setLang('de',this)">DE</button>
+    <button class="lang-btn" onclick="setLang('ja',this)">JA</button>
+  </div>
+  <a href="approach-a.html" class="compare-link">Compare → Approach A</a>
+</div>
+
+<div class="page">
+  <nav class="nav">
+    <span class="nav-logo">Acme</span>
+    <span class="nav-cta"><a href="#"><span data-i18n="nav_signin_link"></span></a></span>
+  </nav>
+
+  <header class="hero">
+    <h1 data-i18n="hero_heading"></h1>
+    <p class="hero-sub" data-i18n="hero_sub"></p>
+    <div class="hero-badges">
+      <span data-i18n="hero_badge_1"></span>
+      <span data-i18n="hero_badge_2"></span>
+      <span data-i18n="hero_badge_3"></span>
+    </div>
+  </header>
+
+  <section class="plans">
+    <h2 data-i18n="plans_heading"></h2>
+    <p class="plans-sub" data-i18n="plans_sub"></p>
+    <div class="plan-cards">
+      <div class="plan-card">
+        <div class="plan-name" data-i18n="plan_free_name"></div>
+        <div class="plan-price" id="free-price"></div>
+        <div class="plan-desc" data-i18n="plan_free_desc"></div>
+        <ul>
+          <li data-i18n="plan_free_feat_1"></li>
+          <li data-i18n="plan_free_feat_2"></li>
+          <li data-i18n="plan_free_feat_3"></li>
+          <li data-i18n="plan_free_feat_4"></li>
+        </ul>
+        <button class="plan-btn" data-i18n="plan_free_cta"></button>
+      </div>
+
+      <div class="plan-card featured">
+        <div class="plan-badge">&nbsp;</div>
+        <div class="plan-name" data-i18n="plan_pro_name"></div>
+        <div class="plan-price" id="pro-price"></div>
+        <div class="plan-desc" data-i18n="plan_pro_desc"></div>
+        <ul>
+          <li data-i18n="plan_pro_feat_1"></li>
+          <li data-i18n="plan_pro_feat_2"></li>
+          <li data-i18n="plan_pro_feat_3"></li>
+          <li data-i18n="plan_pro_feat_4"></li>
+          <li data-i18n="plan_pro_feat_5"></li>
+        </ul>
+        <button class="plan-btn" data-i18n="plan_pro_cta"></button>
+      </div>
+
+      <div class="plan-card">
+        <div class="plan-name" data-i18n="plan_team_name"></div>
+        <div class="plan-price" id="team-price"></div>
+        <div class="plan-desc" data-i18n="plan_team_desc"></div>
+        <ul>
+          <li data-i18n="plan_team_feat_1"></li>
+          <li data-i18n="plan_team_feat_2"></li>
+          <li data-i18n="plan_team_feat_3"></li>
+          <li data-i18n="plan_team_feat_4"></li>
+          <li data-i18n="plan_team_feat_5"></li>
+        </ul>
+        <button class="plan-btn" data-i18n="plan_team_cta"></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="form-section">
+    <h2 data-i18n="form_heading"></h2>
+    <p class="form-sub" data-i18n="form_sub"></p>
+    <form onsubmit="return false">
+      <div class="field">
+        <label data-i18n="label_name"></label>
+        <input type="text" data-i18n-placeholder="placeholder_name" />
+      </div>
+      <div class="field">
+        <label data-i18n="label_email"></label>
+        <input type="email" data-i18n-placeholder="placeholder_email" />
+      </div>
+      <div class="field">
+        <label data-i18n="label_password"></label>
+        <input type="password" data-i18n-placeholder="placeholder_password" />
+        <span class="field-hint" data-i18n="password_hint"></span>
+      </div>
+      <div class="field">
+        <label data-i18n="label_company"></label>
+        <input type="text" placeholder="—" />
+      </div>
+      <div class="field">
+        <label data-i18n="label_role"></label>
+        <select>
+          <option data-i18n="role_placeholder"></option>
+          <option data-i18n="role_engineer"></option>
+          <option data-i18n="role_designer"></option>
+          <option data-i18n="role_manager"></option>
+          <option data-i18n="role_founder"></option>
+          <option data-i18n="role_other"></option>
+        </select>
+      </div>
+      <div class="field">
+        <label data-i18n="label_team_size"></label>
+        <select>
+          <option data-i18n="team_size_placeholder"></option>
+          <option data-i18n="team_size_1"></option>
+          <option data-i18n="team_size_2"></option>
+          <option data-i18n="team_size_3"></option>
+          <option data-i18n="team_size_4"></option>
+        </select>
+      </div>
+      <button type="submit" class="btn-submit" data-i18n="submit_button"></button>
+      <p class="terms">
+        <a href="#"><span data-i18n="terms_link"></span></a> · <a href="#"><span data-i18n="privacy_link"></span></a>
+        <br><span data-i18n="terms_footer"></span>
+      </p>
+    </form>
+  </section>
+
+  <section class="social-proof">
+    <p class="trusted-by" data-i18n="trusted_by"></p>
+    <div class="testimonials">
+      <blockquote>
+        <p data-i18n="testimonial_1_quote"></p>
+        <cite>— <em>Author not extracted</em></cite>
+      </blockquote>
+      <blockquote>
+        <p data-i18n="testimonial_2_quote"></p>
+        <cite>— <em>Author not extracted</em></cite>
+      </blockquote>
+      <blockquote>
+        <p data-i18n="testimonial_3_quote"></p>
+        <cite>— <em>Author not extracted</em></cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="faq">
+    <h2 data-i18n="faq_heading"></h2>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq_1_q"></span></button>
+      <div class="faq-a" data-i18n="faq_1_a"></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq_2_q"></span></button>
+      <div class="faq-a" data-i18n="faq_2_a"></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq_3_q"></span></button>
+      <div class="faq-a" data-i18n="faq_3_a"></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq_4_q"></span></button>
+      <div class="faq-a" data-i18n="faq_4_a"></div>
+    </div>
+  </section>
+
+  <footer>
+    <p data-i18n="footer_copy"></p>
+    <nav>
+      <a href="#" data-i18n="footer_terms"></a>
+      <a href="#" data-i18n="footer_privacy"></a>
+      <a href="#" data-i18n="footer_security"></a>
+      <a href="#" data-i18n="footer_contact"></a>
+      <a href="#" data-i18n="footer_status"></a>
+    </nav>
+  </footer>
+</div>
+
+<script>
+// Raw auto-locale data (keys as generated by i18n-auto.ts / llama 3.2)
+const raw = {
+  en: {
+    "sign_in_button": "Sign in", "hero_heading": "Build faster, ship smarter",
+    "hero_sub": "The all-in-one platform for modern development teams. Start free, scale when you're ready.",
+    "hero_badge_1": "No credit card required", "hero_badge_2": "Free 14-day trial on all plans", "hero_badge_3": "Cancel anytime",
+    "plan-selector-heading": "Choose your plan", "plans-sub-text": "Switch or cancel anytime. No hidden fees.",
+    "free-plan-name": "Free", "free-plan-price": "$0 /month", "free-plan-desc": "Perfect for personal projects and learning.",
+    "free-projects-limit": "Up to 3 projects", "free-community-support": "Community support", "free-basic-analytics": "Basic analytics", "free-storage-size": "1 GB storage",
+    "get-started-for-free-button-text": "Get started for free",
+    "pro-plan-name": "Pro", "pro-plan-price": "$12 /month", "pro-plan-desc": "For professionals who need more power.",
+    "pro-unlimited-projects": "Unlimited projects", "pro-priority-support": "Priority support", "pro-advanced-analytics": "Advanced analytics", "pro-storage-size": "50 GB storage", "pro-custom-integrations": "Custom integrations",
+    "start-free-trial-button-text": "Start free trial",
+    "team-plan-name": "Team", "team-plan-price": "$49 /month", "team-plan-desc": "Collaborate with your entire team.",
+    "team-everything-in-pro": "Everything in Pro", "team-members-limit": "Up to 25 members", "team-admin-controls": "Admin controls", "team-sso-support": "SSO support", "team-storage-size": "500 GB storage",
+    "start-team-trial-button-text": "Start team trial",
+    "signup_form_heading": "Create your account", "form_sub": "Set up your workspace in under 2 minutes.",
+    "full_name_label": "Full name", "name_placeholder": "Enter your full name",
+    "work_email_label": "Work email", "email_placeholder": "you@company.com",
+    "password_label": "Password", "password_placeholder": "At least 8 characters",
+    "field_hint": "Use a mix of letters, numbers and symbols for a stronger password.",
+    "company_name_label": "Company name",
+    "role_label": "Your role", "select_role_option_1": "Select your role",
+    "select_role_option_2": "Software Engineer", "select_role_option_3": "Designer", "select_role_option_4": "Product Manager", "select_role_option_5": "Founder / CEO", "select_role_option_6": "Other",
+    "team_size_label": "Team size", "select_team_size_option_1": "Select team size",
+    "select_team_size_option_2": "Just me", "select_team_size_option_3": "2–10 people", "select_team_size_option_4": "11–50 people", "select_team_size_option_5": "51+ people",
+    "submit_button": "Create free account",
+    "terms_of_service_link": "Terms of Service", "privacy_policy_link": "Privacy Policy",
+    "unsubscribe_message": "We'll occasionally send you product updates — unsubscribe anytime.",
+    "trusted_by": "Trusted by over 10,000 teams worldwide",
+    "blockquote_text_1": "Acme cut our deployment time in half. We couldn't imagine going back.",
+    "blockquote_text_2": "The best developer tool we've adopted this year. Onboarding was seamless.",
+    "blockquote_text_3": "Finally, a platform that scales with our team without breaking the budget.",
+    "faq_heading": "Frequently asked questions",
+    "question_label": "Can I upgrade or downgrade my plan later?",
+    "upgrade_downgrade_plan": "Yes, you can change your plan at any time from your account settings. Changes take effect at the start of your next billing cycle.",
+    "answer_label": "Is my data secure?",
+    "secure_data_text": "Absolutely. We use industry-standard encryption and comply with GDPR, SOC 2, and ISO 27001. Your data is never shared or sold.",
+    "discount_label": "Do you offer a discount for startups or nonprofits?",
+    "trial_expiration_message": "What happens when my trial ends?",
+    "trial_ends_message": "You'll be notified before your trial expires. You can choose a paid plan or continue on the free tier — no credit card required to start.",
+    "copyright_text": "© 2026 Acme, Inc. All rights reserved.",
+    "footer_links_terms": "Terms", "footer_links_privacy": "Privacy", "footer_links_security": "Security", "footer_links_contact": "Contact us", "footer_links_status": "System status"
+  },
+  es: {
+    "sign_in_button": "Iniciar sesión", "hero_heading": "Aprovecha más tiempo y crea con mayor eficiencia",
+    "hero_sub": "La plataforma integral para equipos de desarrollo modernos. Comienza gratis, escalas cuando estés listo.",
+    "hero_badge_1": "No requiere tarjeta de crédito", "hero_badge_2": "Prueba gratuita de 14 días en todas las opciones", "hero_badge_3": "Puedes cancelar en cualquier momento",
+    "plan-selector-heading": "Elige tu plan", "plans-sub-text": "Cambia o cancela en cualquier momento. Sin trampas ni sorpresas.",
+    "free-plan-name": "Gratuito", "free-plan-price": "$0 /mes", "free-plan-desc": "Ideal para proyectos personales y aprendizaje.",
+    "free-projects-limit": "Hasta 3 proyectos", "free-community-support": "Soporte comunitario", "free-basic-analytics": "Análisis básicos", "free-storage-size": "1 GB de almacenamiento",
+    "get-started-for-free-button-text": "Empezar por gratis",
+    "pro-plan-name": "Pro", "pro-plan-price": "$12 /mes", "pro-plan-desc": "Para profesionales que necesitan más potencia.",
+    "pro-unlimited-projects": "Proyectos ilimitados", "pro-priority-support": "Soporte de prioridad", "pro-advanced-analytics": "Análisis avanzados", "pro-storage-size": "50 GB almacenamiento", "pro-custom-integrations": "Integraciones personalizadas",
+    "start-free-trial-button-text": "Comenzar prueba gratuita",
+    "team-plan-name": "Equipo", "team-plan-price": "$49 /mes", "team-plan-desc": "Colabora con toda tu equipo.",
+    "team-everything-in-pro": "Todo en Pro", "team-members-limit": "Hasta 25 miembros", "team-admin-controls": "Controles de administrador", "team-sso-support": "Soporte SSO", "team-storage-size": "500 GB almacenamiento",
+    "start-team-trial-button-text": "Comenzar prueba de equipo",
+    "signup_form_heading": "Crear tu cuenta", "form_sub": "Configura tu espacio de trabajo en menos de 2 minutos.",
+    "full_name_label": "Nombre completo", "name_placeholder": "Escribe tu nombre completo",
+    "work_email_label": "Correo electrónico de trabajo", "email_placeholder": "ejemplo@empresa.com",
+    "password_label": "Contraseña", "password_placeholder": "Mínimo 8 caracteres",
+    "field_hint": "Utiliza una mezcla de letras, números y símbolos para una contraseña más fuerte.",
+    "company_name_label": "Nombre de la empresa",
+    "role_label": "Tu rol", "select_role_option_1": "Selecciona tu rol",
+    "select_role_option_2": "Ingeniero de software", "select_role_option_3": "Diseñador", "select_role_option_4": "Gerente de producto", "select_role_option_5": "Fundador / CEO", "select_role_option_6": "Otro",
+    "team_size_label": "Tamaño del equipo", "select_team_size_option_1": "Selecciona el tamaño del equipo",
+    "select_team_size_option_2": "Sólo yo", "select_team_size_option_3": "2–10 personas", "select_team_size_option_4": "11–50 personas", "select_team_size_option_5": "51+ personas",
+    "submit_button": "Crear cuenta gratuita",
+    "terms_of_service_link": "Condiciones de servicio", "privacy_policy_link": "Política de privacidad",
+    "unsubscribe_message": "Nosotros te enviaremos ocasionalmente actualizaciones de producto — puedes desuscribirte en cualquier momento.",
+    "trusted_by": "Confiable por más de 10,000 equipos en todo el mundo",
+    "blockquote_text_1": "Acme redujo nuestro tiempo de implementación en la mitad. No podríamos imaginarnos volviendo a eso.",
+    "blockquote_text_2": "La mejor herramienta de desarrollo que hemos adoptado este año. El proceso de inicio fue sin problemas.",
+    "blockquote_text_3": "Finalmente, una plataforma que se adapta a nuestro equipo sin romper el presupuesto.",
+    "faq_heading": "Preguntas frecuentes",
+    "question_label": "¿Puedo mejorar o cambiar mi plan más adelante?",
+    "upgrade_downgrade_plan": "Sí, puedes cambiar tu plan en cualquier momento desde tus configuraciones de cuenta. Los cambios toman efecto al inicio del próximo ciclo de facturación.",
+    "answer_label": "¿Mi datos están seguros?",
+    "secure_data_text": "Absolutamente. Usamos cifrado estándar de la industria y cumplimos con GDPR, SOC 2 y ISO 27001. Nuestros datos nunca se comparten ni venden.",
+    "discount_label": "¿Ofrece descuentos para startups o sin fines de lucro?",
+    "trial_expiration_message": "¿Qué pasa cuando termina mi prueba?",
+    "trial_ends_message": "Te notificaremos antes de que termine tu prueba. Puedes elegir un plan pagado o continuar en el nivel gratuito — no se requiere tarjeta de crédito para empezar.",
+    "copyright_text": "© 2026 Acme, Inc. Todos los derechos reservados.",
+    "footer_links_terms": "Términos", "footer_links_privacy": "Privacidad", "footer_links_security": "Seguridad", "footer_links_contact": "Contactanos", "footer_links_status": "Estado del sistema"
+  },
+  fr: {
+    "sign_in_button": "Se connecter", "hero_heading": "Construire plus vite, naviguer plus intelligemment",
+    "hero_sub": "La plateforme complète pour les équipes de développement modernes. Commencez gratuitement, escalade lorsque vous le souhaitez.",
+    "hero_badge_1": "Pas besoin de carte de crédit", "hero_badge_2": "Essai gratuit de 14 jours sur tous les plans", "hero_badge_3": "Annuler à tout moment",
+    "plan-selector-heading": "Choisissez votre plan", "plans-sub-text": "Passer d'un plan ou annuler à tout moment. Pas de frais cachés.",
+    "free-plan-name": "Gratuit", "free-plan-price": "$0 /mois", "free-plan-desc": "Parfait pour les projets personnels et l'apprentissage.",
+    "free-projects-limit": "Jusqu'à 3 projets", "free-community-support": "Support communautaire", "free-basic-analytics": "Analytiques de base", "free-storage-size": "1 Go de stockage",
+    "get-started-for-free-button-text": "Commencer pour free",
+    "pro-plan-name": "Pro", "pro-plan-price": "$12 /mois", "pro-plan-desc": "Pour les professionnels qui ont besoin de plus de puissance.",
+    "pro-unlimited-projects": "Projets sans limite", "pro-priority-support": "Support prioritaire", "pro-advanced-analytics": "Analyse avancée", "pro-storage-size": "50 Go de stockage", "pro-custom-integrations": "Intégrations personnalisées",
+    "start-free-trial-button-text": "Démarrer essai gratuit",
+    "team-plan-name": "Équipe", "team-plan-price": "$49 /mois", "team-plan-desc": "Collabore avec tout votre équipe.",
+    "team-everything-in-pro": "Tout dans Pro", "team-members-limit": "Jusqu'à 25 membres", "team-admin-controls": "Contrôles d'administration", "team-sso-support": "Support SSO", "team-storage-size": "500 Go de stockage",
+    "start-team-trial-button-text": "Démarrer essai d'équipe",
+    "signup_form_heading": "Créer votre compte", "form_sub": "Configurez votre espace de travail en moins de 2 minutes.",
+    "full_name_label": "Nom complet", "name_placeholder": "Entrez votre nom complet",
+    "work_email_label": "Adresse e-mail professionnelle", "email_placeholder": "exemple@entreprise.com",
+    "password_label": "Mot de passe", "password_placeholder": "Au moins 8 caractères",
+    "field_hint": "Utilisez une combinaison de lettres, de nombres et d'astres pour un mot de passe plus fort.",
+    "company_name_label": "Nom de l'entreprise",
+    "role_label": "Votre rôle", "select_role_option_1": "Sélectionnez votre rôle",
+    "select_role_option_2": "Ingénieur logiciel", "select_role_option_3": "Conceleur", "select_role_option_4": "Responsable produit", "select_role_option_5": "Fondateur / PDG", "select_role_option_6": "Autre",
+    "team_size_label": "", "select_team_size_option_1": "",
+    "select_team_size_option_2": "Seul(e)", "select_team_size_option_3": "2 à 10 personnes", "select_team_size_option_4": "11 à 50 personnes", "select_team_size_option_5": "51+ personnes",
+    "submit_button": "Créer un compte gratuit",
+    "terms_of_service_link": "Conditions générales d'utilisation", "privacy_policy_link": "Politique de confidentialité",
+    "unsubscribe_message": "Nous vous envoyerons occasionnellement des mises à jour de produits — désabonnez-vous à tout moment.",
+    "trusted_by": "Trusté par plus de 10 000 équipes dans le monde entier",
+    "blockquote_text_1": "Acme a raccourci notre temps de déploiement de la moitié. Nous ne pouvons pas imaginer revenir à cela.",
+    "blockquote_text_2": "Le meilleur outil de développement que nous avons adopté cette année. L'inscription a été sans problème.",
+    "blockquote_text_3": "Enfin, une plateforme qui s'adapte à notre équipe sans rompre le budget.",
+    "faq_heading": "Questions fréquentes",
+    "question_label": "Puis-je mettre à jour ou modifier mon plan plus tard?",
+    "upgrade_downgrade_plan": "Oui, vous pouvez modifier votre plan à tout moment depuis vos paramètres d'account. Les changements prennent effet au début de votre prochain cycle facturé.",
+    "answer_label": "Est-ce que mes données sont sécurisées?",
+    "secure_data_text": "Absolument. Nous utilisons des cryptages standards de l'industrie et respectons les normes GDPR, SOC 2 et ISO 27001. Vos données sont jamais partagées ou vendues.",
+    "discount_label": "Avez-vous des offres de réduction pour les startups ou les organisations à but non lucratif?",
+    "trial_expiration_message": "Qu'est-ce qui se passe lorsque ma période d'essai expire?",
+    "trial_ends_message": "Vous recevrez une notification avant que votre période d'essai expire. Vous pouvez choisir un plan payant ou continuer sur la tierce gratuite — pas de carte bancaire requise pour commencer.",
+    "copyright_text": "© 2026 Acme, Inc. Tous droits réservés.",
+    "footer_links_terms": "Terms", "footer_links_privacy": "Privacy", "footer_links_security": "Security", "footer_links_contact": "Contactez-nous", "footer_links_status": "Statut du système"
+  },
+  de: {
+    "sign_in_button": "Anmelden", "hero_heading": "Schneller bauen, smarter schippen",
+    "hero_sub": "Die alleinige Plattform für moderne Entwicklerteams. Starten Sie kostenlos, skalieren Sie, wenn Sie bereit sind.",
+    "hero_badge_1": "Keine Kreditkarte erforderlich", "hero_badge_2": "Freier 14-Tage-Probefall auf allen Plänen", "hero_badge_3": "Kündigen Sie jederzeit",
+    "plan-selector-heading": "Wählen Sie Ihren Plan", "plans-sub-text": "Übergangen oder gekündigt werden können. Keine versteckten Gebühren.",
+    "free-plan-name": "Frei", "free-plan-price": "$0 /Monat", "free-plan-desc": "Ideal für persönliche Projekte und Lernzwecke.",
+    "free-projects-limit": "Bis zu 3 Projekte", "free-community-support": "Community-Support", "free-basic-analytics": "Grundlegende Analytik", "free-storage-size": "1 GB Speicherplatz",
+    "get-started-for-free-button-text": "Los geht's kostenlos",
+    "pro-plan-name": "Pro", "pro-plan-price": "$12 /Monat", "pro-plan-desc": "Für professionelle, die mehr Leistung benötigen.",
+    "pro-unlimited-projects": "Unbegrenzte Projekte", "pro-priority-support": "Prioritätsunterstützung", "pro-advanced-analytics": "Fortgeschrittene Analysefunktionen", "pro-storage-size": "50 GB Speicherplatz", "pro-custom-integrations": "Benutzerdefinierte Integrationen",
+    "start-free-trial-button-text": "Los geht's mit einer kostenlosen Probesession",
+    "team-plan-name": "Teamplan", "team-plan-price": "$49 /Monat", "team-plan-desc": "Arbeiten Sie mit Ihrem gesamten Team.",
+    "team-everything-in-pro": "Alles im Pro", "team-members-limit": "Bis zu 25 Mitglieder", "team-admin-controls": "Verwaltungseinstellungen für Admins", "team-sso-support": "SSO-Unterstützung", "team-storage-size": "500 GB Speicherplatz",
+    "start-team-trial-button-text": "Los geht's mit einem Teamprobesession",
+    "signup_form_heading": "Erstellen Sie Ihr Konto", "form_sub": "Ihr Arbeitsplatz können Sie innerhalb von 2 Minuten einrichten.",
+    "full_name_label": "Vollständiger Name", "name_placeholder": "Bitte geben Sie Ihren vollständigen Namen ein",
+    "work_email_label": "Arbeits-E-Mail-Adresse", "email_placeholder": "beispielsweise du@unternehmen.de",
+    "password_label": "Passwort", "password_placeholder": "Mindestens 8 Zeichen",
+    "field_hint": "Verwenden Sie eine Mischung aus Buchstaben, Zahlen und Symbolen für ein stärkeres Passwort.",
+    "company_name_label": "Unternehmensname",
+    "role_label": "Ihre Rolle", "select_role_option_1": "Wählen Sie Ihre Rolle",
+    "select_role_option_2": "Software-Engineer", "select_role_option_3": "Designer", "select_role_option_4": "Produktmanager", "select_role_option_5": "Gründer / CEO", "select_role_option_6": "Sonstiges",
+    "team_size_label": "Teamgröße", "select_team_size_option_1": "Wählen Sie die Teamgröße",
+    "select_team_size_option_2": "Alleine", "select_team_size_option_3": "2–10 Personen", "select_team_size_option_4": "11–50 Personen", "select_team_size_option_5": "51+ Personen",
+    "submit_button": "Konto erstellen",
+    "terms_of_service_link": "Nutzungsbedingungen", "privacy_policy_link": "Datenschutzzertifikat",
+    "unsubscribe_message": "Wir senden dir gelegentlich Produktupdates — melde dich jederzeit ab.",
+    "trusted_by": "Gefürcht von über 10.000 Teams weltweit",
+    "blockquote_text_1": "Acme hat unsere Bereitstellung um die Hälfte verkürzt. Wir können uns nicht mehr vorstellen, ohne dich.",
+    "blockquote_text_2": "Das beste Entwicklerwerkzeug, das wir dieses Jahr übernommen haben. Die Einführung war reibungslos.",
+    "blockquote_text_3": "Schließlich ein Plattform, die mit unserem Team wächst, ohne unsere Budgets zu gefährden.",
+    "faq_heading": "Frequente Fragen",
+    "question_label": "Kann ich später meine Planung ändern oder herabsetzen?",
+    "upgrade_downgrade_plan": "Ja, man kann seine Planung jederzeit aus der Einstellungsbereich ändern. Änderungen traten am Beginn des nächsten Abrechnungszyklus in Kraft.",
+    "answer_label": "Ist mein Datenverkehr sicher?",
+    "secure_data_text": "Absolut. Wir verwenden Standardverschlüsselung und erfüllen die Vorschriften von GDPR, SOC 2 und ISO 27001. Keine Daten werden geteilt oder verkauft.",
+    "discount_label": "Bieten Sie eine Rabatt für Start-ups oder gemeinnützige Organisationen an?",
+    "trial_expiration_message": "Was passiert, wenn mein Trial abläuft?",
+    "trial_ends_message": "Sie werden vor dem Ablauf Ihres Trials informiert. Sie können ein bezahltes Plan wählen oder weiterhin auf der kostenlosen Ebene fortfahren – kein Kreditkartenanforderung erforderlich, um loszulegen.",
+    "copyright_text": "© 2026 Acme, Inc. Alle Rechte vorbehalten.",
+    "footer_links_terms": "Terms", "footer_links_privacy": "Privacy", "footer_links_security": "Security", "footer_links_contact": "Kontaktieren Sie uns", "footer_links_status": "Systemstatus"
+  },
+  ja: {
+    "sign_in_button": "Sign in", "hero_heading": "より速く、より賢く",
+    "hero_sub": "すべての開発チーム用の一体化プラットフォーム。無料で始め、必要に応じてスケールすることができます。",
+    "hero_badge_1": "クレジットカードは必要ありません", "hero_badge_2": "すべてのプランで14日間の無料テストが可能", "hero_badge_3": "いつでもキャンセルできます",
+    "plan-selector-heading": "プランを選択してください", "plans-sub-text": "またはキャンセルすることができます。隠した料金はありません。",
+    "free-plan-name": "無料", "free-plan-price": "$0 /月", "free-plan-desc": "個人的プロジェクトや学習に最適です。",
+    "free-projects-limit": "3プロジェクトまで", "free-community-support": "コミュニティサポート", "free-basic-analytics": "基本分析", "free-storage-size": "1 GB ストレージ",
+    "get-started-for-free-button-text": "無料で始めます",
+    "pro-plan-name": "プルーシュ", "pro-plan-price": "$12 /月", "pro-plan-desc": "専門家向けのプランです。より多くのパワーが必要な方に適しています。",
+    "pro-unlimited-projects": "無制限のプロジェクト", "pro-priority-support": "優先サポート", "pro-advanced-analytics": "高度な分析機能", "pro-storage-size": "50 GB ストレージ", "pro-custom-integrations": "カスタム統合",
+    "start-free-trial-button-text": "無料試験を開始します",
+    "team-plan-name": "チーム", "team-plan-price": "$49 /月", "team-plan-desc": "全てのチームメンバーと協力できます。",
+    "team-everything-in-pro": "プロプランにすべて含まれています", "team-members-limit": "最大 25 人まで", "team-admin-controls": "管理者コントロール", "team-sso-support": "SSO サポート", "team-storage-size": "500 GB ストレージ",
+    "start-team-trial-button-text": "チームの試験を開始します",
+    "signup_form_heading": "アカウントを作成する", "form_sub": "2分以内にワークスペースを設定できます。",
+    "full_name_label": "全名", "name_placeholder": "全名を入力してください",
+    "work_email_label": "ワーク ईメール", "email_placeholder": "会社@会社.com",
+    "password_label": "パスワード", "password_placeholder": "少なくとも8文字",
+    "field_hint": "アルファベット、数字、シンボルを組み合わせて強いパスワードを作ります。",
+    "company_name_label": "会社名",
+    "role_label": "役割", "select_role_option_1": "役割を選択する",
+    "select_role_option_2": "ソフトウェアエンジニア", "select_role_option_3": "デザイナー", "select_role_option_4": "製品マネージャー", "select_role_option_5": "共同創設者/CEO", "select_role_option_6": "その他",
+    "team_size_label": "", "select_team_size_option_1": "",
+    "select_team_size_option_2": "一人で", "select_team_size_option_3": "2人から10人", "select_team_size_option_4": "11人から50人", "select_team_size_option_5": "51人以上",
+    "submit_button": "無料アカウントを作成する",
+    "terms_of_service_link": "サービス利用規定", "privacy_policy_link": "プライバシーポリシー",
+    "unsubscribe_message": " occasional に製品の更新を送ります — あなたがいつでも退会できます。",
+    "trusted_by": "世界中10,000以上のチームから信頼されています",
+    "blockquote_text_1": "Acme は、 deployment 時間を半分短縮しました。戻ることはできませんでした。",
+    "blockquote_text_2": "この製品は今まででいちばん良く採用されました。オンboarding はすごく簡単でした。",
+    "blockquote_text_3": " finally、チームのサイズに応じて予算を守るプラットフォームができました。",
+    "faq_heading": "よくありますか",
+    "question_label": "は今後、プランをアップグレードしたりダウングレードしたりできるですか?",
+    "upgrade_downgrade_plan": "はい、プランを変更することはあらゆる時点からアカウント設定で行うことができます。変更はご利用開始時からご利用開始月末までのbillingサイクルより前の日付に適用されます。",
+    "answer_label": "データの安全性は確保されていますか?",
+    "secure_data_text": "確かにです。業界標準の暗号化を使用し、GDPR、SOC 2、ISO 27001 の規格に準拠しています。データは共有または売却されません。",
+    "discount_label": "スタートアップやノンプロFIT団体に割引を提供していますか?",
+    "trial_expiration_message": "トライアルが終了すると何が起こるのですか?",
+    "trial_ends_message": "トライアルが終了する前に、ご利用者に通知します。プランを選択したり、無料レベルに続けることができます。クレジットカードの必要性はありません。",
+    "copyright_text": "© 2026 Acme, Inc. All rights reserved.",
+    "footer_links_terms": "Terms", "footer_links_privacy": "Privacy", "footer_links_security": "Security", "footer_links_contact": "Contact us", "footer_links_status": "System status"
+  }
+};
+
+// Normalize auto keys to standard template keys
+function normalize(r) {
+  return {
+    nav_signin_link: r["sign_in_button"] || "",
+    hero_heading: r["hero_heading"] || "", hero_sub: r["hero_sub"] || "",
+    hero_badge_1: r["hero_badge_1"] ? "✓ " + r["hero_badge_1"] : "",
+    hero_badge_2: r["hero_badge_2"] ? "✓ " + r["hero_badge_2"] : "",
+    hero_badge_3: r["hero_badge_3"] ? "✓ " + r["hero_badge_3"] : "",
+    plans_heading: r["plan-selector-heading"] || "", plans_sub: r["plans-sub-text"] || "",
+    plan_free_name: r["free-plan-name"] || "", plan_free_price: r["free-plan-price"] || "", plan_free_period: "",
+    plan_free_desc: r["free-plan-desc"] || "",
+    plan_free_feat_1: r["free-projects-limit"] || "", plan_free_feat_2: r["free-community-support"] || "",
+    plan_free_feat_3: r["free-basic-analytics"] || "", plan_free_feat_4: r["free-storage-size"] || "",
+    plan_free_cta: r["get-started-for-free-button-text"] || "",
+    plan_pro_name: r["pro-plan-name"] || "", plan_pro_price: r["pro-plan-price"] || "", plan_pro_period: "",
+    plan_pro_desc: r["pro-plan-desc"] || "",
+    plan_pro_feat_1: r["pro-unlimited-projects"] || "", plan_pro_feat_2: r["pro-priority-support"] || "",
+    plan_pro_feat_3: r["pro-advanced-analytics"] || "", plan_pro_feat_4: r["pro-storage-size"] || "",
+    plan_pro_feat_5: r["pro-custom-integrations"] || "", plan_pro_cta: r["start-free-trial-button-text"] || "",
+    plan_team_name: r["team-plan-name"] || "", plan_team_price: r["team-plan-price"] || "", plan_team_period: "",
+    plan_team_desc: r["team-plan-desc"] || "",
+    plan_team_feat_1: r["team-everything-in-pro"] || "", plan_team_feat_2: r["team-members-limit"] || "",
+    plan_team_feat_3: r["team-admin-controls"] || "", plan_team_feat_4: r["team-sso-support"] || "",
+    plan_team_feat_5: r["team-storage-size"] || "", plan_team_cta: r["start-team-trial-button-text"] || "",
+    form_heading: r["signup_form_heading"] || "", form_sub: r["form_sub"] || "",
+    label_name: r["full_name_label"] || "", placeholder_name: r["name_placeholder"] || "",
+    label_email: r["work_email_label"] || "", placeholder_email: r["email_placeholder"] || "",
+    label_password: r["password_label"] || "", placeholder_password: r["password_placeholder"] || "",
+    password_hint: r["field_hint"] || "", label_company: r["company_name_label"] || "",
+    label_role: r["role_label"] || "", role_placeholder: r["select_role_option_1"] || "",
+    role_engineer: r["select_role_option_2"] || "", role_designer: r["select_role_option_3"] || "",
+    role_manager: r["select_role_option_4"] || "", role_founder: r["select_role_option_5"] || "",
+    role_other: r["select_role_option_6"] || "",
+    label_team_size: r["team_size_label"] || "", team_size_placeholder: r["select_team_size_option_1"] || "",
+    team_size_1: r["select_team_size_option_2"] || "", team_size_2: r["select_team_size_option_3"] || "",
+    team_size_3: r["select_team_size_option_4"] || "", team_size_4: r["select_team_size_option_5"] || "",
+    submit_button: r["submit_button"] || "",
+    terms_link: r["terms_of_service_link"] || "", privacy_link: r["privacy_policy_link"] || "",
+    terms_footer: r["unsubscribe_message"] || "", trusted_by: r["trusted_by"] || "",
+    testimonial_1_quote: r["blockquote_text_1"] || "",
+    testimonial_2_quote: r["blockquote_text_2"] || "",
+    testimonial_3_quote: r["blockquote_text_3"] || "",
+    faq_heading: r["faq_heading"] || "",
+    faq_1_q: r["question_label"] || "", faq_1_a: r["upgrade_downgrade_plan"] || "",
+    faq_2_q: r["answer_label"] || "", faq_2_a: r["secure_data_text"] || "",
+    faq_3_q: r["discount_label"] || "", faq_3_a: "",
+    faq_4_q: r["trial_expiration_message"] || "", faq_4_a: r["trial_ends_message"] || "",
+    footer_copy: r["copyright_text"] || "",
+    footer_terms: r["footer_links_terms"] || "", footer_privacy: r["footer_links_privacy"] || "",
+    footer_security: r["footer_links_security"] || "", footer_contact: r["footer_links_contact"] || "",
+    footer_status: r["footer_links_status"] || ""
+  };
+}
+
+const locales = { en: normalize(raw.en), es: normalize(raw.es), fr: normalize(raw.fr), de: normalize(raw.de), ja: normalize(raw.ja) };
+let lang = "en";
+
+function t(key) { return locales[lang][key] || locales.en[key] || ""; }
+
+function setLang(l, btn) {
+  lang = l;
+  document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  render();
+}
+
+function render() {
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    el.textContent = t(el.getAttribute("data-i18n"));
+  });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+    el.placeholder = t(el.getAttribute("data-i18n-placeholder"));
+  });
+  document.getElementById("free-price").textContent = t("plan_free_price");
+  document.getElementById("pro-price").textContent = t("plan_pro_price");
+  document.getElementById("team-price").textContent = t("plan_team_price");
+}
+
+function toggleFaq(btn) {
+  const answer = btn.nextElementSibling;
+  const isOpen = answer.style.display === "block";
+  document.querySelectorAll(".faq-a").forEach(a => a.style.display = "none");
+  document.querySelectorAll(".faq-q").forEach(b => b.classList.remove("open"));
+  if (!isOpen) { answer.style.display = "block"; btn.classList.add("open"); }
+}
+
+render();
+</script>
+</body>
+</html>
